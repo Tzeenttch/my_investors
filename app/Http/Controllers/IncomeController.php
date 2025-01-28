@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Income;
 use Illuminate\Http\Request;
+
 
 class IncomeController extends Controller
 {
@@ -11,21 +13,38 @@ class IncomeController extends Controller
      */
     public function index()
     {
+
         $tableData = [
             'heading' => [
-                'date','category','amount','nuevaCategoria'
+                'date',
+                'category',
+                'amount'
             ],
-            'data' => [
-                ['12/12/2012','salary','2500','1'],
-                ['12/01/2013','salary','2500','1'],
-                ['12/02/2014','salary','2550','1'],
-                ['12/02/2014','salary','2550','1'],
-                ['12/02/2014','salary','2550','1']
-            ]
-        ]; 
+            'data' => []
+        ];
+        $incomeData = Income::all();
+        $extractedData = [];
+        // dd($incomeData);
+        $i = 0;
+
+        foreach ($incomeData as $data) {
+
+            $extractedData[$i] = $data->getOriginal();
+            $tableData['data'][] = [
+                'date' => $extractedData[$i]['date'],
+                'category' => $extractedData[$i]['category'],
+                'amount' => $extractedData[$i]['amount']
+            ];
+            $i++;
+        }
+
+
+
+
+        //  dd($tableData);
+
         //Aquí la lógica de negocio para el index
-        return view('income.index',['title' => 'My incomes','tableData' => $tableData]);
-        
+        return view('income.index', ['title' => 'My incomes', 'tableData' => $tableData]);
     }
 
     /**
@@ -69,7 +88,7 @@ class IncomeController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        
+
     }
 
     /**

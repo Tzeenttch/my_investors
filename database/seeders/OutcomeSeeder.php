@@ -2,19 +2,19 @@
 
 namespace Database\Seeders;
 
-use App\Models\Income;
+use App\Models\Outcome;
 use Database\Factories\IncomeFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class IncomeSeeder extends Seeder
+class OutcomeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Income::factory()->count(50)->create();
+        Outcome::factory()->count(50)->create();
     }
 }
