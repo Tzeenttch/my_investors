@@ -24,18 +24,14 @@ class OutcomeController extends Controller
         ];
 
         $outcomeData = Outcome::all();
-        $extractedData = [];
-        $i = 0;
-
+        
         foreach ($outcomeData as $data) {
-            $extractedData[$i] = $data->getOriginal();
             $tableData['data'][] = [
-                'date' => $extractedData[$i]['date'],
-                'bank' => $extractedData[$i]['bank'],
-                'category' => $extractedData[$i]['category'],
-                'amount' => $extractedData[$i]['amount']
+                'date' => $data['date'],
+                'bank' => $data['bank'],
+                'category' => $data['category'],
+                'amount' => $data['amount']
             ];
-            $i++;
         }
         //Aquí la lógica de negocio para el index
         return view('outcome.index', ['title' => 'My outcomes', 'tableData' => $tableData]);

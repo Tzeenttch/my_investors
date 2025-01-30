@@ -23,25 +23,14 @@ class IncomeController extends Controller
             'data' => []
         ];
         $incomeData = Income::all();
-        $extractedData = [];
-        // dd($incomeData);
-        $i = 0;
 
         foreach ($incomeData as $data) {
-
-            $extractedData[$i] = $data->getOriginal();
             $tableData['data'][] = [
-                'date' => $extractedData[$i]['date'],
-                'category' => $extractedData[$i]['category'],
-                'amount' => $extractedData[$i]['amount']
+                'date' => $data['date'],
+                'category' => $data['category'],
+                'amount' => $data['amount']
             ];
-            $i++;
         }
-
-
-
-
-        //  dd($tableData);
 
         //Aquí la lógica de negocio para el index
         return view('income.index', ['title' => 'My incomes', 'tableData' => $tableData]);
