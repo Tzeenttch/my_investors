@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Income extends Model
 {
     use HasFactory;
+
+    //It is necessary to use fillable for mass assignment.
+    protected $fillable = ['date', 'category', 'amount'];
+
 }

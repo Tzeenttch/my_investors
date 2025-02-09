@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Income;
 use Illuminate\Http\Request;
 
+use function Pest\Laravel\post;
 
 class IncomeController extends Controller
 {
@@ -41,8 +42,8 @@ class IncomeController extends Controller
      */
     public function create()
     {
-        //
-        return '<p>Esta es la página del create de incomes</p>';
+        
+        return view('income.create', ['title' => 'Create Income' ,'action' => './incomes']);
     }
 
     /**
@@ -50,7 +51,22 @@ class IncomeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        //Validate the request
+
+        $validated = $request->validate([
+            'date' => 'required|date',
+            'category' => 'required|string',
+            'amount' => 'required|numeric'
+        ]);
+
+        Income::create([
+        'date' => $validated['date'],
+        'category' => $validated['category'],
+        'amount' => $validated['amount']
+        ]);
+
+        return redirect()->route('incomes.index')->with('Success', 'Registered Income');
     }
 
     /**

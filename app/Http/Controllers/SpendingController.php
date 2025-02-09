@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Outcome;
+use App\Models\Spending;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\View\View;
 
-class OutcomeController extends Controller
+class SpendingController extends Controller
 {
 
     public function index()
@@ -23,9 +23,9 @@ class OutcomeController extends Controller
             'data' => []
         ];
 
-        $outcomeData = Outcome::all();
+        $spendingData = Spending::all();
         
-        foreach ($outcomeData as $data) {
+        foreach ($spendingData as $data) {
             $tableData['data'][] = [
                 'date' => $data['date'],
                 'bank' => $data['bank'],
@@ -34,6 +34,6 @@ class OutcomeController extends Controller
             ];
         }
         //Aquí la lógica de negocio para el index
-        return view('outcome.index', ['title' => 'My outcomes', 'tableData' => $tableData]);
+        return view('spending.index', ['title' => 'My Spendings', 'tableData' => $tableData]);
     }
 }
