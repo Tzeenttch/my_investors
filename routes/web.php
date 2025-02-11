@@ -21,9 +21,10 @@ Route::get('/createIncome', [IncomeController::class, 'create'])->name('incomes.
 
 // To create a path to the edit form
 Route::get('/editIncome/{id}', [IncomeController::class, 'edit'])->name('incomes.edit');
-//To process the information 
+//To process the  edit information 
 Route::patch('/editIncome/{id}', [IncomeController::class, 'update'])->name('incomes.update');
 
+Route::get('/showIncome/{id}', [IncomeController::class, 'show'])->name('incomes.show');
 
 //Routes for Spendings
 Route::get('/spendings', [SpendingController::class, 'index'])->name('spending.index');
@@ -37,6 +38,8 @@ Route::delete('/destroySpending/{id}', [SpendingController::class, 'destroy'])->
 Route::get('/editSpending/{id}', [SpendingController::class, 'edit'])->name('spendings.edit');
 
 Route::patch('/editSpending/{id}', [SpendingController::class, 'update'])->name('spendings.update');
+
+Route::get('/showSpending/{id}', [SpendingController::class, 'show'])->name('spendings.show');
 
 
 

@@ -30,7 +30,9 @@
                 <div class="flex h-16 items-center justify-between">
                     <div class="flex items-center">
                         <div class="shrink-0">
-                            <img class="size-8" src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="Your Company">
+                            <a href="http://localhost:8000/incomes" >
+                                <img class="size-8" src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="Your Company">
+                            </a>
                         </div>
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4">

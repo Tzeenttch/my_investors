@@ -60,7 +60,7 @@ class SpendingController extends Controller
             'date' => 'required|date',
             'bank' => 'required|string',
             'category' => 'required|string',
-            'amount' => 'required|numeric'
+            'amount' => 'required|numeric|between:1,10000'
         ]);
 
         Spending::create([
@@ -78,8 +78,27 @@ class SpendingController extends Controller
      */
     public function show(string $id)
     {
-        //
-        return '<p>Esta es la página del show de incomes</p>';
+        $tableData = [
+            'heading' => [
+                'id',
+                'date',
+                'bank',
+                'category',
+                'amount'
+            ],
+            'data' => []
+        ];
+        $record = Spending::findOrFail($id);
+
+            $tableData['data'][] = [
+                'id' => $record->id,
+                'date' => $record->date,
+                'bank' => $record->bank,
+                'category' => $record->category,
+                'amount' => $record->amount
+            ];
+
+        return view('spending.index', ['title' => 'My Spendings', 'tableData' => $tableData]);
     }
 
     /**
@@ -103,7 +122,7 @@ class SpendingController extends Controller
             'date' => 'required|date',
             'bank' => 'required|string',
             'category' => 'required|string',
-            'amount' => 'required|numeric'
+            'amount' => 'required|numeric|between:1,10000'
         ]);
 
         $income->update([

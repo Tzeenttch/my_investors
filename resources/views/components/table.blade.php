@@ -1,5 +1,5 @@
 <div class="relative overflow-x-auto">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <table class="w-full text-sm text-left rtl:text-right mt-5 text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 @foreach ($tableData['heading'] as $heading)
@@ -15,10 +15,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($tableData['data'] as $data)
-                @if ($loop->odd)
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-800">
-                        @foreach ($data as $key => $information)
+            @foreach ($tableData['data'] as $key => $data)
+            <tr class="border-b @if ($loop->odd) bg-gray-800 @else bg-gray-700 text-white @endif dark:border-gray-800">
+                @foreach ($data as $key => $information)
                             @if ($key != 'id')
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -28,13 +27,21 @@
                         @endforeach
                         <th scope="row"
                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+
+                            {{--SHOW--}}
+                            @if($title == 'My Spendings')
+                            <a class="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent hover:bg-gradient-to-r hover:from-green-400 hover:to-purple-400 hover:border-green-400 border-blue-400 font-semibold py-2.5 px-4 border border-none-400 rounded shadow" type="button" href="{{ url('showSpending/' . $data['id']) }}">Show</a>
+                                @else
+                                <a class="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent hover:bg-gradient-to-r hover:from-green-400 hover:to-purple-500 hover:border-green-400 border-blue-400 font-semibold py-2.5 px-4 border border-none-400 rounded shadow" type="button" href="{{ url('showIncome/' . $data['id']) }}">Show</a>
+                            @endif
+
                             {{-- UPDATE --}}
                             @if($title == 'My Spendings')
-                            <a type="button" href="{{ url('editSpending/' . $data['id']) }}">Edit</button>
+                            <a class="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent hover:bg-gradient-to-r hover:from-green-400 hover:to-purple-400 hover:border-green-400 border-blue-400 font-semibold ml-2 mr-2 py-2.5 px-4 border border-none-400 rounded shadow" type="button" href="{{ url('editSpending/' . $data['id']) }}">Edit</a>
                                 @else
-                                <a type="button" href="{{ url('editIncome/' . $data['id']) }}">Edit</button>
+                                <a class="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent hover:bg-gradient-to-r hover:from-green-400 hover:to-purple-500 hover:border-green-400 border-blue-400 font-semibold ml-2 mr-2 py-2.5 px-4 border border-none-400 rounded shadow" type="button" href="{{ url('editIncome/' . $data['id']) }}">Edit</a>
                             @endif
-                            |
+                        
                             {{-- DELETE --}}
                             </form>
                             @if ($title == 'My Spendings')
@@ -47,45 +54,11 @@
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value={{ $data['id'] }}>
-                            <button type="submit" class="text-red-500 hover:underline">Delete</button>
+                            <button class="bg-gradient-to-r from-red-700 to-purple-500 bg-clip-text text-transparent hover:bg-gradient-to-r hover:from-yellow-600 hover:to-purple-500 hover:border-yellow-500 border-red-500 font-semibold py-2 px-4 border border-none-400 rounded shadow" type="submit">Delete</button>
                             </form>
                         </th>
                     </tr>
-                @else
-                    <tr class="bg-white border-b dark:bg-gray-700 dark:border-gray-700">
-                        @foreach ($data as $key => $information)
-                            @if ($key != 'id')
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $information }}
-                                </th>
-                            @endif
-                        @endforeach
-                        <th scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{-- UPDATE --}}
-                            @if($title == 'My Spendings')
-                            <a type="button" href="{{ url('editSpending/' . $data['id']) }}">Edit</button>
-                                @else
-                                <a type="button" href="{{ url('editIncome/' . $data['id']) }}">Edit</button>
-                            @endif
-                            |
-                            {{-- DELETE --}}
-                            @if ($title == 'My Spendings')
-                                <form action="{{ url('./destroySpending/' . $data['id']) }}" method="post"
-                                    style="display:inline;">
-                                @else
-                                    <form action="{{ url('./destroyIncome/' . $data['id']) }}" method="post"
-                                        style="display:inline;">
-                            @endif
-                            @csrf
-                            @method('DELETE')
-                            <input type="hidden" name="id" value={{ $data['id'] }}>
-                            <button type="submit" class="text-red-500 hover:underline">Delete</button>
-                            </form>
-                        </th>
-                    </tr>
-                @endif
+                
             @endforeach
         </tbody>
     </table>

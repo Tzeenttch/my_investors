@@ -58,7 +58,7 @@ class IncomeController extends Controller
         $validated = $request->validate([
             'date' => 'required|date',
             'category' => 'required|string',
-            'amount' => 'required|numeric'
+            'amount' => 'required|numeric|between:1,10000'
         ]);
 
         Income::create([
@@ -75,8 +75,26 @@ class IncomeController extends Controller
      */
     public function show(string $id)
     {
-        //
-        return '<p>Esta es la página del show de incomes</p>';
+        
+        $tableData = [
+            'heading' => [
+                'id',
+                'date',
+                'category',
+                'amount'
+            ],
+            'data' => []
+        ];
+        $record = Income::findOrFail($id);
+
+            $tableData['data'][] = [
+                'id' => $record->id,
+                'date' => $record->date,
+                'category' => $record->category,
+                'amount' => $record->amount
+            ];
+
+        return view('income.index', ['title' => 'My incomes', 'tableData' => $tableData]);
     }
 
     /**
@@ -101,7 +119,7 @@ class IncomeController extends Controller
         $validated = $request->validate([
             'date' => 'required|date',
             'category' => 'required|string',
-            'amount' => 'required|numeric'
+            'amount' => 'required|numeric|between:1,10000'
         ]);
 
         $income->update([
