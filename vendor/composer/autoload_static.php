@@ -601,6 +601,7 @@ class ComposerStaticInit0ad1f473193b3feb98972000beec0da4
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\View\\Components\\Button' => __DIR__ . '/../..' . '/app/View/Components/Button.php',
+        'App\\View\\Components\\EditForm' => __DIR__ . '/../..' . '/app/View/Components/EditForm.php',
         'App\\View\\Components\\Layouts\\Index' => __DIR__ . '/../..' . '/app/View/Components/Layouts/Index.php',
         'App\\View\\Components\\Table' => __DIR__ . '/../..' . '/app/View/Components/Table.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',

@@ -17,6 +17,7 @@ class IncomeController extends Controller
 
         $tableData = [
             'heading' => [
+                'id',
                 'date',
                 'category',
                 'amount'
@@ -27,6 +28,7 @@ class IncomeController extends Controller
 
         foreach ($incomeData as $data) {
             $tableData['data'][] = [
+                'id' => $data['id'],
                 'date' => $data['date'],
                 'category' => $data['category'],
                 'amount' => $data['amount']
@@ -42,8 +44,7 @@ class IncomeController extends Controller
      */
     public function create()
     {
-        
-        return view('income.create', ['title' => 'Create Income' ,'action' => './incomes']);
+        return view('income.createForm', ['title' => 'Create Income' ,'action' => './incomes', 'operation' => 'create']);
     }
 
     /**
@@ -83,8 +84,10 @@ class IncomeController extends Controller
      */
     public function edit(string $id)
     {
-        //
-        return '<p>Esta es la página del edit de incomes</p>';
+        //Contain the complete record with id == $id
+        $record = Income::findOrFail($id);
+
+        return view('income.editForm', ['title' => 'Edit Income' ,'action' => 'incomes', 'operation' => 'edit', 'record' => $record]);
     }
 
     /**
@@ -92,8 +95,22 @@ class IncomeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        
+        $income = Income::findOrFail($id);
 
+        $validated = $request->validate([
+            'date' => 'required|date',
+            'category' => 'required|string',
+            'amount' => 'required|numeric'
+        ]);
+
+        $income->update([
+            'date' => $validated['date'],
+            'category' => $validated['category'],
+            'amount' => $validated['amount']
+        ]);
+
+        return redirect()->route('incomes.index')->with('Succes', 'Income updated succesfully');
     }
 
     /**
@@ -101,6 +118,13 @@ class IncomeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $incomeId = Income::find($id);
+
+        if($incomeId){
+            $incomeId->delete();
+        }else{
+            return redirect()->route('incomes.index')-with("Error", "Income record not found");
+        }
+        return redirect()->route('incomes.index')->with('Succes', 'Income record destroyed');
     }
 }

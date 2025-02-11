@@ -14,6 +14,7 @@ return array(
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\View\\Components\\Button' => $baseDir . '/app/View/Components/Button.php',
+    'App\\View\\Components\\EditForm' => $baseDir . '/app/View/Components/EditForm.php',
     'App\\View\\Components\\Layouts\\Index' => $baseDir . '/app/View/Components/Layouts/Index.php',
     'App\\View\\Components\\Table' => $baseDir . '/app/View/Components/Table.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',

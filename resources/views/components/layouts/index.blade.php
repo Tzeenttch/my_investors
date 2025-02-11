@@ -40,7 +40,7 @@
                                 <a href="/spendings" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">My Spendings</a>
                                 @elseif($title == "My Spendings")
                                 <a href="/incomes" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">My Incomes</a>
-                                @elseif($title == "Create Income" || $title  == "Create Spending")
+                                @elseif($title == "Create Income" || $title  == "Create Spending" || $title == "Edit Income" || $title == "Edit Spending")
                                 <a href="/incomes" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">My Incomes</a>
                                 <a href="/spendings" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">My Spendings</a>
                                 @endif
