@@ -1,9 +1,14 @@
 <x-layouts.index :title="$title">
-  
-  <div class="mt-4">
-    <x-button href='./createIncome'>Add</x-button>
-  </div>
-  
+    @if (session('Success'))
+        <div class="border-2 border-style: solid; border-green-500 mb-5 rounded-md">
+            <ul  class="list-disc p-2 text-green-600 font-semibold"> Success:
+                  <li class="text-green-600 ml-5 font-normal">{{ session('Success')}}</li>
+          </ul>
+        </div>
+    @endif
 
-  <x-table :tableData="$tableData" :title="$title"/>
-  </x-layouts.index>
+    <div class="mt-4">
+        <x-button href='/createIncome'>Add Income</x-button>
+    </div>
+    <x-table :tableData="$tableData" :title="$title" />
+</x-layouts.index>

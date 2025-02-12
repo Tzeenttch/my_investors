@@ -57,7 +57,7 @@ class IncomeController extends Controller
 
         $validated = $request->validate([
             'date' => 'required|date',
-            'category' => 'required|string',
+            'category' => 'required|string|in:Transferencia, Bizum, Efectivo, Tarjeta de credito',
             'amount' => 'required|numeric|between:1,10000'
         ]);
 
@@ -118,7 +118,7 @@ class IncomeController extends Controller
 
         $validated = $request->validate([
             'date' => 'required|date',
-            'category' => 'required|string',
+            'category' => 'required|string|in:Transferencia, Bizum, Efectivo, Tarjeta de credito',
             'amount' => 'required|numeric|between:1,10000'
         ]);
 

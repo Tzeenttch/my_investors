@@ -45,7 +45,7 @@ class SpendingController extends Controller
      */
     public function create()
     {
-        return view('spending.manageForm', ['title' => 'Create Spending' ,'action' => './spendings', 'operation' => 'create']);
+        return view('spending.createForm', ['title' => 'Create Spending' ,'action' => './spendings', 'operation' => 'create']);
     }
 
     /**
@@ -58,8 +58,8 @@ class SpendingController extends Controller
 
         $validated = $request->validate([
             'date' => 'required|date',
-            'bank' => 'required|string',
-            'category' => 'required|string',
+            'bank' => 'required|string|in:Santander, BBVA, CaixaBank, CajaRural, Unicaja',
+            'category' => 'required|string|in:Transferencia, Bizum, Efectivo, Tarjeta de credito',
             'amount' => 'required|numeric|between:1,10000'
         ]);
 
@@ -108,7 +108,7 @@ class SpendingController extends Controller
     {
         $record = Spending::findOrFail($id);
 
-        return view('spending.manageForm', ['title' => 'Edit Spending' ,'action' => 'spendings', 'operation' => 'edit', 'record' => $record]);
+        return view('spending.editForm', ['title' => 'Edit Spending' ,'action' => 'spendings', 'operation' => 'edit', 'record' => $record]);
     }
 
     /**
@@ -120,8 +120,8 @@ class SpendingController extends Controller
 
         $validated = $request->validate([
             'date' => 'required|date',
-            'bank' => 'required|string',
-            'category' => 'required|string',
+            'bank' => 'required|string|in:Santander, BBVA, CaixaBank, CajaRural, Unicaja',
+            'category' => 'required|string|in:Transferencia, Bizum, Efectivo, Tarjeta de credito',
             'amount' => 'required|numeric|between:1,10000'
         ]);
 

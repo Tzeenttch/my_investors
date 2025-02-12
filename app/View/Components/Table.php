@@ -15,9 +15,7 @@ class Table extends Component
     //It is necesary initialize the title variable
     public function __construct(public array $tableData,public string $title='')
     {
-        // $this->tableData = $tableData;
-        // $this->title = $title;
-        
+     //   
     }
     
     /**
