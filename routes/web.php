@@ -3,12 +3,29 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\SpendingController;
+use App\Http\Controllers\UserController;
 use App\Models\Spending;
 
+
+
+
+//Modify the default route. changing the welcome vies for the login view
 Route::get('/', function () {
     return view('welcome');
 });
 
+//Routes for Users:
+
+Route::get('/signup', [UserController::class, 'create'])->name('user.create');
+Route::post('/signup', [UserController::class, 'store'])->name('user.store');
+
+Route::get('/login', [UserController::class, 'login'])->name('login');
+Route::post('/login', [UserController::class, 'authenticate'])->name('user.authenticate');
+
+//This middleware protects the routes of unverified users
+Route::middleware(['auth'])->group(function () {
+
+Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
 //Routes for Incomes
 //Route::resource('incomes', IncomeController::class);
 Route::get('/incomes', [IncomeController::class, 'index'])->name('incomes.index');
@@ -41,6 +58,6 @@ Route::patch('/editSpending/{id}', [SpendingController::class, 'update'])->name(
 
 Route::get('/showSpending/{id}', [SpendingController::class, 'show'])->name('spendings.show');
 
-
+});
 
 

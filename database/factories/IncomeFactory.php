@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +21,7 @@ class IncomeFactory extends Factory
             'date' => fake()->date(),
             'category' => fake()->randomElement(['Transferencia', 'Bizum', 'Efectivo', 'Tarjeta de credito']),
             'amount' =>fake()->randomFloat(2, 1, 10000),
+            'user_id' => User::factory(),
         ];
     }
 }

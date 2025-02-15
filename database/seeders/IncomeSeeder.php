@@ -15,6 +15,7 @@ class IncomeSeeder extends Seeder
      */
     public function run(): void
     {
+        ini_set('memory_limit', '1G');
         Income::factory()->count(10)->create();
     }
 }

@@ -69,7 +69,8 @@ class SpendingController extends Controller
         'date' => $validated['date'],
         'bank' => $validated['bank'],
         'category' => $validated['category'],
-        'amount' => $validated['amount']
+        'amount' => $validated['amount'],
+        //Añadir ID del usuario
         ]);
 
         return redirect()->route('spending.index')->with('Success', 'Registered Spending');

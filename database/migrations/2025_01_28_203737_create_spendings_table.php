@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('outcomes', function (Blueprint $table) {
+        Schema::create('spendings', function (Blueprint $table) {
             $table->id();
             $table->date('date');
             $table->string('bank');
@@ -26,6 +26,13 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Schema::table('spendings', function (Blueprint $table) {
+        //     $table->dropForeign(['user_id']);  
+        // });
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['spending_id']);
+            $table->dropForeign(['income_id']);   
+        });
         Schema::dropIfExists('spendings');
     }
 };
