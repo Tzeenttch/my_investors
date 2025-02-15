@@ -5,14 +5,13 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use PhpParser\Node\Expr\List_;
 
-class EditForm extends Component
+class input extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $action='', public object $record)
+    public function __construct(public string $for, public string $type, public string $name, public string $id, public string $value, public string $label)
     {
         //
     }
@@ -22,6 +21,6 @@ class EditForm extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.edit-form');
+        return view('components.input');
     }
 }

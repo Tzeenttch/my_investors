@@ -58,10 +58,12 @@ class SpendingController extends Controller
 
         $validated = $request->validate([
             'date' => 'required|date',
-            'bank' => 'required|string|in:Santander, BBVA, CaixaBank, CajaRural, Unicaja',
-            'category' => 'required|string|in:Transferencia, Bizum, Efectivo, Tarjeta de credito',
-            'amount' => 'required|numeric|between:1,10000'
+            'bank' => 'required|string',
+            'category' => 'required|string',
+            'amount' => 'required|numeric|between:0.01,10000'
         ]);
+
+        
 
         Spending::create([
         'date' => $validated['date'],
@@ -120,9 +122,9 @@ class SpendingController extends Controller
 
         $validated = $request->validate([
             'date' => 'required|date',
-            'bank' => 'required|string|in:Santander, BBVA, CaixaBank, CajaRural, Unicaja',
-            'category' => 'required|string|in:Transferencia, Bizum, Efectivo, Tarjeta de credito',
-            'amount' => 'required|numeric|between:1,10000'
+            'bank' => 'required|string',
+            'category' => 'required|string',
+            'amount' => 'required|numeric|between:0.01,10000'
         ]);
 
         $income->update([

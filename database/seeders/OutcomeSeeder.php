@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Outcome;
+use App\Models\Spending;
 use Database\Factories\IncomeFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,6 +15,6 @@ class OutcomeSeeder extends Seeder
      */
     public function run(): void
     {
-        Outcome::factory()->count(50)->create();
+        Spending::factory()->count(10)->create();
     }
 }

@@ -54,11 +54,10 @@ class IncomeController extends Controller
     {
 
         //Validate the request
-
         $validated = $request->validate([
             'date' => 'required|date',
-            'category' => 'required|string|in:Transferencia, Bizum, Efectivo, Tarjeta de credito',
-            'amount' => 'required|numeric|between:1,10000'
+            'category' => 'required|string',
+            'amount' => 'required|numeric|between:0.01,10000'
         ]);
 
         Income::create([
@@ -66,7 +65,6 @@ class IncomeController extends Controller
         'category' => $validated['category'],
         'amount' => $validated['amount']
         ]);
-
         return redirect()->route('incomes.index')->with('Success', 'Registered Income');
     }
 
@@ -118,10 +116,9 @@ class IncomeController extends Controller
 
         $validated = $request->validate([
             'date' => 'required|date',
-            'category' => 'required|string|in:Transferencia, Bizum, Efectivo, Tarjeta de credito',
-            'amount' => 'required|numeric|between:1,10000'
+            'category' => 'required|string|',
+            'amount' => 'required|numeric|between:0.01,10000'
         ]);
-
         $income->update([
             'date' => $validated['date'],
             'category' => $validated['category'],

@@ -26,7 +26,7 @@ Route::patch('/editIncome/{id}', [IncomeController::class, 'update'])->name('inc
 
 Route::get('/showIncome/{id}', [IncomeController::class, 'show'])->name('incomes.show');
 
-//Routes for Spendings
+//Routes for Spendings -- can also use 'resource' to substitute these routes.
 Route::get('/spendings', [SpendingController::class, 'index'])->name('spending.index');
 
 Route::post('/spendings', [SpendingController::class, 'store'])->name('spendings.store');
