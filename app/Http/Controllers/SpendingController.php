@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Spending;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class SpendingController extends Controller
@@ -24,7 +25,9 @@ class SpendingController extends Controller
             'data' => []
         ];
 
-        $spendingData = Spending::all();
+        $userId = Auth::id();
+        $userName = Auth::user()->name;
+        $spendingData = Spending::where('user_id', $userId)->get();
         
         foreach ($spendingData as $data) {
             $tableData['data'][] = [
@@ -36,7 +39,7 @@ class SpendingController extends Controller
             ];
         }
         //Aquí la lógica de negocio para el index
-        return view('spending.index', ['title' => 'My Spendings', 'tableData' => $tableData]);
+        return view('spending.index', ['title' => 'My Spendings','name' => $userName ,'tableData' => $tableData]);
     }
 
 
@@ -54,8 +57,12 @@ class SpendingController extends Controller
     public function store(Request $request)
     {
 
-        //Validate the request
+        //Check if the user is logged in
+        if (!Auth::check()) {
+            abort(403, 'Unauthorized');
+        }
 
+        //Validate the request
         $validated = $request->validate([
             'date' => 'required|date',
             'bank' => 'required|string',
@@ -63,15 +70,7 @@ class SpendingController extends Controller
             'amount' => 'required|numeric|between:0.01,10000'
         ]);
 
-        
-
-        Spending::create([
-        'date' => $validated['date'],
-        'bank' => $validated['bank'],
-        'category' => $validated['category'],
-        'amount' => $validated['amount'],
-        //Añadir ID del usuario
-        ]);
+        $request->user()->spendings()->create($validated);
 
         return redirect()->route('spending.index')->with('Success', 'Registered Spending');
     }
@@ -101,7 +100,7 @@ class SpendingController extends Controller
                 'amount' => $record->amount
             ];
 
-        return view('spending.index', ['title' => 'My Spendings', 'tableData' => $tableData]);
+        return view('spending.index', ['title' => 'My Spendings', 'name'=>null, 'tableData' => $tableData]);
     }
 
     /**

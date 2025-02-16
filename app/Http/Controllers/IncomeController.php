@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Income;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 use function Pest\Laravel\post;
 
@@ -24,7 +26,10 @@ class IncomeController extends Controller
             ],
             'data' => []
         ];
-        $incomeData = Income::all();
+ 
+        $userId = Auth::id();
+        $userName = Auth::user()->name;    
+        $incomeData = Income::where('user_id', $userId)->get();
 
         foreach ($incomeData as $data) {
             $tableData['data'][] = [
@@ -36,7 +41,7 @@ class IncomeController extends Controller
         }
 
         //Aquí la lógica de negocio para el index
-        return view('income.index', ['title' => 'My incomes', 'tableData' => $tableData]);
+        return view('income.index', ['title' => 'My incomes','name' => $userName ,'tableData' => $tableData]);
     }
 
     /**
@@ -52,6 +57,9 @@ class IncomeController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::check()) {
+            abort(403, 'Unauthorized');
+        }
 
         //Validate the request
         $validated = $request->validate([
@@ -60,11 +68,8 @@ class IncomeController extends Controller
             'amount' => 'required|numeric|between:0.01,10000'
         ]);
 
-        Income::create([
-        'date' => $validated['date'],
-        'category' => $validated['category'],
-        'amount' => $validated['amount']
-        ]);
+        $request->user()->incomes()->create($validated);
+        
         return redirect()->route('incomes.index')->with('Success', 'Registered Income');
     }
 
@@ -73,7 +78,6 @@ class IncomeController extends Controller
      */
     public function show(string $id)
     {
-        
         $tableData = [
             'heading' => [
                 'id',
@@ -92,7 +96,7 @@ class IncomeController extends Controller
                 'amount' => $record->amount
             ];
 
-        return view('income.index', ['title' => 'My incomes', 'tableData' => $tableData]);
+        return view('income.index', ['title' => 'My incomes', 'name'=>null,'tableData' => $tableData]);
     }
 
     /**
@@ -113,7 +117,7 @@ class IncomeController extends Controller
     {
         
         $income = Income::findOrFail($id);
-
+        
         $validated = $request->validate([
             'date' => 'required|date',
             'category' => 'required|string|',

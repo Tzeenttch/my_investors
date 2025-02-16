@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use phpDocumentor\Reflection\Types\Boolean;
 
 class UserController extends Controller
@@ -40,7 +41,7 @@ class UserController extends Controller
         'password' => Hash::make($validated['password']),
         ]);
 
-        return redirect()->route('user.login')->with('Success', 'User created');
+        return redirect()->route('login')->with('Success', 'User created');
     }
 
     //Show the login form
@@ -57,8 +58,12 @@ class UserController extends Controller
             'password' => 'required|string',
         ]);
 
-         $remember = $request->has('remember') ? true : false; 
+        $remember = $request->has('remember') ? true : false; 
         if(Auth::attempt($credentials, $remember)){
+            //If it were necessary to save the id in the session:
+            // $userId = Auth::user()->id;
+            // Session::put('userid', $userId);
+            
             $request->session()->regenerate();
             return redirect()->intended(route('incomes.index'));
         }
