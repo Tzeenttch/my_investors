@@ -17,5 +17,8 @@ class Income extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function Category(): BelongsTo{
+        return $this->belongsTo(Category::class);
+    }
 
 }

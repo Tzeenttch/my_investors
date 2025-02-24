@@ -1,6 +1,6 @@
 <x-layouts.index :title="$title">
     <div>
-        <form action="./spendings" method="POST" class="w-full max-w-sm">
+        <form action="/spendings" method="POST" class="w-full max-w-sm">
             @csrf
             <x-input :for="'date'" :name="'date'" :id="'date'" :type="'date'" :label="'Date:'"
                 :value="'date'" />
@@ -14,8 +14,8 @@
             <x-select :selected="'Santander'" :label="'Bank:'" :for="'bank'" :id="'bank'" :name="'bank'"
                 :options="['Santander', 'BBVA', 'CaixaBank', 'Caja Rural', 'Unicaja']" />
 
-            <x-select :selected="'Bizum'" :label="'Category:'" :for="'category'" :id="'category'" :name="'category'"
-                :options="['Bizum', 'Transferencia', 'Efectivo', 'Tarjeta de credito']" />
+            <x-select :selected="'Bizum'" :label="'Category:'" :for="'category'" :id="'category_id'" :name="'category_id'"
+                :options="['Bizum', 'Transferencia', 'Tarjeta de credito']" />
 
             <x-input :for="'amount'" :name="'amount'" :id="'amount'" :type="'text'" :label="'Amount:'"
                 :value="'0.00'" />

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Spending;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -28,27 +29,28 @@ class SpendingController extends Controller
         $userId = Auth::id();
         $userName = Auth::user()->name;
         $spendingData = Spending::where('user_id', $userId)->get();
-        
+
         foreach ($spendingData as $data) {
+            $category = Category::findOrFail($data['category_id']);
             $tableData['data'][] = [
                 'id' => $data['id'],
                 'date' => $data['date'],
                 'bank' => $data['bank'],
-                'category' => $data['category'],
+                'category' => $category->name,
                 'amount' => $data['amount']
             ];
         }
         //Aquí la lógica de negocio para el index
-        return view('spending.index', ['title' => 'My Spendings','name' => $userName ,'tableData' => $tableData]);
+        return view('spending.index', ['title' => 'My Spendings', 'name' => $userName, 'tableData' => $tableData]);
     }
 
 
-     /**
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('spending.createForm', ['title' => 'Create Spending' ,'action' => './spendings', 'operation' => 'create']);
+        return view('spending.createForm', ['title' => 'Create Spending', 'action' => './spendings', 'operation' => 'create']);
     }
 
     /**
@@ -61,15 +63,20 @@ class SpendingController extends Controller
         if (!Auth::check()) {
             abort(403, 'Unauthorized');
         }
-
         //Validate the request
         $validated = $request->validate([
             'date' => 'required|date',
             'bank' => 'required|string',
-            'category' => 'required|string',
-            'amount' => 'required|numeric|between:0.01,10000'
+            'amount' => 'required|numeric|between:0.01,10000',
+            'category_id' => 'required|exists:categories,name',
         ]);
 
+        $category = Category::where("name", $validated['category_id'])->first();
+
+        // Replace 'category' with its actual 'id'
+        $validated['category_id'] = $category->id;
+        unset($validated['category']);
+        // dd($validated['category_id']);
         $request->user()->spendings()->create($validated);
 
         return redirect()->route('spending.index')->with('Success', 'Registered Spending');
@@ -91,16 +98,17 @@ class SpendingController extends Controller
             'data' => []
         ];
         $record = Spending::findOrFail($id);
+        $category = Category::findOrFail($record->category_id);
 
-            $tableData['data'][] = [
-                'id' => $record->id,
-                'date' => $record->date,
-                'bank' => $record->bank,
-                'category' => $record->category,
-                'amount' => $record->amount
-            ];
+        $tableData['data'][] = [
+            'id' => $record->id,
+            'date' => $record->date,
+            'bank' => $record->bank,
+            'category' => $category->name,
+            'amount' => $record->amount
+        ];
 
-        return view('spending.index', ['title' => 'My Spendings', 'name'=>null, 'tableData' => $tableData]);
+        return view('spending.index', ['title' => 'My Spendings', 'name' => null, 'tableData' => $tableData]);
     }
 
     /**
@@ -110,7 +118,7 @@ class SpendingController extends Controller
     {
         $record = Spending::findOrFail($id);
 
-        return view('spending.editForm', ['title' => 'Edit Spending' ,'action' => 'spendings', 'operation' => 'edit', 'record' => $record]);
+        return view('spending.editForm', ['title' => 'Edit Spending', 'action' => 'spendings', 'operation' => 'edit', 'record' => $record]);
     }
 
     /**
@@ -144,9 +152,9 @@ class SpendingController extends Controller
     {
         $spendingId = Spending::find($id);
 
-        if($spendingId){
+        if ($spendingId) {
             $spendingId->delete();
-        }else{
+        } else {
             return redirect()->route('spending.index')->with('Error', 'Spending record not found');
         }
 

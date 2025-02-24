@@ -1,6 +1,6 @@
     <x-layouts.index :title="$title">
         <div>
-            <form action="./incomes" method="POST" class="w-full max-w-sm">
+            <form action="/incomes" method="POST" class="w-full max-w-sm">
                 @csrf
                 <x-input :for="'date'" :name="'date'" :id="'date'" :type="'date'" :label="'Date:'"
                     :value="'date'" />

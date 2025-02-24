@@ -18,7 +18,7 @@
     @endif
 
     <div class="mt-4">
-        <x-button href='/createIncome'>Add Income</x-button>
+        <x-button href='incomes/create'>Add Income</x-button>
     </div>
 
     @if (empty($tableData['data']))

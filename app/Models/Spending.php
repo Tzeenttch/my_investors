@@ -10,11 +10,15 @@ class Spending extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['date', 'bank','category', 'amount'];
+    protected $fillable = ['date', 'bank','category_id', 'amount'];
 
 
     public function user(): BelongsTo{
         return $this->belongsTo(User::class);
+    }
+
+    public function Category(): BelongsTo{
+        return $this->belongsTo(Category::class);
     }
 
 }
