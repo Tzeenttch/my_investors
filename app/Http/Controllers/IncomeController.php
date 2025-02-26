@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Income;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,10 +33,11 @@ class IncomeController extends Controller
         $incomeData = Income::where('user_id', $userId)->get();
 
         foreach ($incomeData as $data) {
+            $category = Category::findOrFail($data['category_id']);
             $tableData['data'][] = [
                 'id' => $data['id'],
                 'date' => $data['date'],
-                'category' => $data['category'],
+                'category' => $category->name,
                 'amount' => $data['amount']
             ];
         }
@@ -64,10 +66,14 @@ class IncomeController extends Controller
         //Validate the request
         $validated = $request->validate([
             'date' => 'required|date',
-            'category' => 'required|string',
-            'amount' => 'required|numeric|between:0.01,10000'
+            'amount' => 'required|numeric|between:0.01,10000',
+            'category_id' => 'required|exists:categories,name',
         ]);
 
+        //Busca la categoria y la reemplaza
+        $category = Category::where("name", $validated['category_id'])->first();
+        $validated['category_id'] = $category->id;
+        unset($validated['category']);
         $request->user()->incomes()->create($validated);
         
         return redirect()->route('incomes.index')->with('Success', 'Registered Income');
@@ -88,11 +94,12 @@ class IncomeController extends Controller
             'data' => []
         ];
         $record = Income::findOrFail($id);
+        $category = Category::findOrFail($record->category_id);
 
             $tableData['data'][] = [
                 'id' => $record->id,
                 'date' => $record->date,
-                'category' => $record->category,
+                'category' => $category->name,
                 'amount' => $record->amount
             ];
 

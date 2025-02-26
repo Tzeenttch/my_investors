@@ -5,7 +5,7 @@
                 <x-input :for="'date'" :name="'date'" :id="'date'" :type="'date'" :label="'Date:'"
                     :value="'date'" />
 
-                <x-select :selected="'Bizum'" :label="'Category:'" :for="'category'" :id="'category'" :name="'category'"
+                <x-select :selected="'Bizum'" :label="'Category:'" :for="'category'" :id="'category_id'" :name="'category_id'"
                     :options="['Bizum', 'Transferencia', 'Efectivo', 'Tarjeta de credito']" />
 
                 <x-input :for="'amount'" :name="'amount'" :id="'amount'" :type="'text'" :label="'Amount:'"

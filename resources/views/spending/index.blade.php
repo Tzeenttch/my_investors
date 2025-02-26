@@ -28,7 +28,7 @@
             <x-select :selected="'Bizum'" :label="'Filtrar por categoria:'" :for="'category_id'" :id="'category_id'" :name="'category_id'"
             :options="['Bizum', 'Transferencia', 'Tarjeta de credito']" />
             <div class="mt-5"></div>
-            <x-button name="filtrar">Filer Spendings</x-button>
+            <x-button name="filtrar">Filter Spendings</x-button>
         </form>
     </div>
 

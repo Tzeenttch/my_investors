@@ -38,6 +38,9 @@ Route::get('/incomes/edit/{id}', [IncomeController::class, 'edit'])->name('incom
 Route::patch('/incomes/edit/{id}', [IncomeController::class, 'update'])->name('incomes.update');
 Route::get('/incomes/show/{id}', [IncomeController::class, 'show'])->name('incomes.show');
 
+Route::post('/incomes/filterCategory', [CategoryController::class, 'filterByCategory'])->name('incomes.filterByCategory');
+
+
 //Routes for Spendings -- can also use 'resource' to substitute these routes.
 Route::get('/spendings', [SpendingController::class, 'index'])->name('spending.index');
 Route::post('/spendings', [SpendingController::class, 'store'])->name('spendings.store');

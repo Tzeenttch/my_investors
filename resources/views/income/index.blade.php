@@ -20,7 +20,15 @@
     <div class="mt-4">
         <x-button href='incomes/create'>Add Income</x-button>
     </div>
-
+    <div class="">
+        <form action="/incomes/filterCategory" method="POST" class="w-full max-w-sm">
+            @csrf
+            <x-select :selected="'Bizum'" :label="'Filtrar por categoria:'" :for="'category_id'" :id="'category_id'" :name="'category_id'"
+            :options="['Bizum', 'Transferencia', 'Tarjeta de credito']" />
+            <div class="mt-5"></div>
+            <x-button name="filtrar">Filter Incomes</x-button>
+        </form>
+    </div>
     @if (empty($tableData['data']))
         <div class="flex items-center justify-center mt-20">
             <div class="text-center">

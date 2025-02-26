@@ -11,7 +11,7 @@ class Income extends Model
     use HasFactory;
 
     //It is necessary to use fillable for mass assignment.
-    protected $fillable = ['date', 'category', 'amount'];
+    protected $fillable = ['date', 'category_id', 'amount'];
 
     public function user(): BelongsTo{
         return $this->belongsTo(User::class);
